@@ -1,0 +1,20 @@
+{
+  "name": "fuelup-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BewitchedBySycorax/fuelup-test.git"
+  },
+  "author": "Aleksei Voitovskii <al.voitovskii@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BewitchedBySycorax/fuelup-test/issues"
+  },
+  "homepage": "https://github.com/BewitchedBySycorax/fuelup-test#readme"
+}
