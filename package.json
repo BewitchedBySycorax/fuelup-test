@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/BewitchedBySycorax/fuelup-test/issues"
   },
-  "homepage": "https://github.com/BewitchedBySycorax/fuelup-test#readme"
+  "homepage": "https://github.com/BewitchedBySycorax/fuelup-test#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "consolidate": "^0.16.0",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6"
+  }
 }
