@@ -1,5 +1,4 @@
-// const express = require('express')
-const server = require('express')()
+const express = require('express')
 const consolidate = require('consolidate')
 const fetch = require('node-fetch')
 
@@ -12,18 +11,22 @@ const fuelUpSource = 'https://aggregator.api.test.fuelup.ru/'
 const fetchStationsInfo = `${fuelUpSource}/tanker/station?apikey=${apikey}`
 const fetchPricesInfo =   `${fuelUpSource}/tanker/price?apikey=${apikey}`
 
-server.engine('hbs', consolidate.handlebars)
-server.set('view engine', 'hbs')
+const app = express()
 
-server.get('/', async (_req, res) => {
+app.engine('hbs', consolidate.handlebars)
+app.set('view engine', 'hbs')
+
+app.get('/', async (_req, res) => {
   try {
-    const outputData = []
+    const 
+      outputStationsData = [],
+      outputPricesData = []
 
     await fetch(fetchStationsInfo)
-      .then(data => data.json())
-      .then(dataJSON => {
-        dataJSON.forEach((station, i) => {
-          outputData.push({
+      .then(stationsInfo => stationsInfo.json())
+      .then(stationsInfoJSON => {
+        stationsInfoJSON.forEach((station, i) => {
+          outputStationsData.push({
             Number: i+1,
             Id: station.Id,
             Enable: station.Enable ? 'Да' : 'Нет',
@@ -32,6 +35,7 @@ server.get('/', async (_req, res) => {
             Location: station.Location,
             PostPay: station.PostPay ? 'Да' : 'Нет',
             Columns: Object.values(station.Columns).map((column, i) => {
+
               // An attempt to translate fuel titles (needed strings of each array index to be parsed)
 
               // switch(column[i]) {
@@ -98,11 +102,29 @@ server.get('/', async (_req, res) => {
         })
       })
 
-    res.render('gas-stations', { outputData: outputData, title: 'Gas station info with prices' })
+    await fetch(fetchPricesInfo)
+      .then(pricesInfo => pricesInfo.json())
+      .then(pricesInfoJSON => {
+        pricesInfoJSON.forEach(fuel => {
+          outputPricesData.push({
+            StationId: fuel.StationId,
+            ProductId: fuel.ProductId,
+            Price: fuel.Price,
+          })
+        })
+      })
+
+    res.render('gas-stations', {
+      outputData: {
+        stations: outputStationsData,
+        prices: outputPricesData
+      },
+      title: 'Gas station info with fuel prices'
+    })
 
   } catch (err) {
     console.error(err.message)
   }
 })
 
-server.listen(PORT, () => console.log(`Server has been started on localhost: ${PORT}`))
+app.listen(PORT, () => console.log(`Server has been started on localhost: ${PORT}`))
