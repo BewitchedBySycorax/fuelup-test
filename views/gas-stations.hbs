@@ -28,9 +28,9 @@
       margin-bottom: 30px;
     }
     .content-row {
+      display: flex;
       border: 1px solid #000;
       border-bottom: none;
-      display: flex;
     }
     .content-cell-left {
       border-right: 1px solid #000;
@@ -38,6 +38,11 @@
       width: 30%;
     }
     .content-cell-right {
+      padding-left: 5px;
+    }
+    .content-cell-right-fuel {
+      display: flex;
+      flex-flow: column nowrap;
       padding-left: 5px;
     }
   </style>
@@ -69,33 +74,39 @@
           </div>
           {{!-- Enable --}}
           <div class="content-row">
-            <div class="content-cell-left">Enable</div>
+            <div class="content-cell-left">Работает</div>
             <div class="content-cell-right">{{this.Enable}}</div>
           </div>
           {{!-- Name --}}
           <div class="content-row">
-            <div class="content-cell-left">Name</div>
+            <div class="content-cell-left">Название</div>
             <div class="content-cell-right">{{this.Name}}</div>
           </div>
           {{!-- Address --}}
           <div class="content-row">
-            <div class="content-cell-left">Address</div>
+            <div class="content-cell-left">Адрес</div>
             <div class="content-cell-right">{{this.Address}}</div>
           </div>
           {{!-- Location --}}
           <div class="content-row">
-            <div class="content-cell-left">Location</div>
-            <div class="content-cell-right">{{this.Location}}</div>
+            <div class="content-cell-left">Местонахождение (координаты)</div>
+            <div class="content-cell-right">{{this.Location.Lat}}&nbsp;&nbsp;{{this.Location.Lon}}</div>
           </div>
           {{!-- PostPay --}}
-          <div class="content-row">
-            <div class="content-cell-left">PostPay</div>
+          <div class="content-row" style="color: #ff0000">
+            <div class="content-cell-left">Пост оплата</div>
             <div class="content-cell-right">{{this.PostPay}}</div>
           </div>
           {{!-- Columns --}}
           <div class="content-row">
-            <div class="content-cell-left">Columns</div>
-            <div class="content-cell-right">{{{this.Columns}}}</div>
+            <div class="content-cell-left">ТРК (номер, индентификатор горючего)</div>
+            <div class="content-cell-right-fuel">
+              {{#each this.Columns}}
+                <div class="column">
+                  {{this}}
+                </div>
+              {{/each}}
+            </div>
           </div>
         </div>
 

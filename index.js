@@ -22,15 +22,78 @@ server.get('/', async (_req, res) => {
     await fetch(fetchStationsInfo)
       .then(data => data.json())
       .then(dataJSON => {
-        dataJSON.forEach((currentStation, i) => {
+        dataJSON.forEach((station, i) => {
           outputData.push({
             Number: i+1,
-            Id: currentStation.Id,
-            Enable: currentStation.Enable,
-            Name: currentStation.Name,
-            Address: currentStation.Address,
-            // Location: JSON.stringify(currentStation.Location),
-            // Columns: JSON.stringify(currentStation.Columns)
+            Id: station.Id,
+            Enable: station.Enable ? 'Да' : 'Нет',
+            Name: station.Name,
+            Address: station.Address,
+            Location: station.Location,
+            PostPay: station.PostPay ? 'Да' : 'Нет',
+            Columns: Object.values(station.Columns).map((column, i) => {
+              // An attempt to translate fuel titles (needed strings of each array index to be parsed)
+
+              // switch(column[i]) {
+              //   case 'diesel':
+              //     column[i] = 'дизель'
+              //     // return 'дизель'
+              //     break
+              //   case 'diesel_premium':
+              //     column[i] = 'брендированный дизель'
+              //     // return 'брендированный дизель'
+              //     break
+              //   case 'a80':
+              //     return column[i] = 'бензин марки А80'
+              //     // return 'бензин марки А80'
+              //     break
+              //   case 'a92':
+              //     return column[i] = 'бензин марки А92'
+              //     // return 'бензин марки А92'
+              //     break
+              //   case 'a92_premium':
+              //     column[i] = 'брендированный бензин марки А92'
+              //     // return 'брендированный бензин марки А92'
+              //     break
+              //   case 'a95':
+              //     column[i] = 'бензин марки А95'
+              //     // return 'бензин марки А95'
+              //     break
+              //   case 'a95_premium':
+              //     column[i] = 'брендированный бензин марки А95'
+              //     // return 'брендированный бензин марки А95'
+              //     break
+              //   case 'a98':
+              //     column[i] = 'бензин марки А98'
+              //     // return 'бензин марки А98'
+              //     break
+              //   case 'a98_premium':
+              //     column[i] = 'брендированный бензин марки А98'
+              //     // return 'брендированный бензин марки А98'
+              //     break
+              //   case 'a100':
+              //     column[i] = 'бензин марки А100'
+              //     // return 'бензин марки А100'
+              //     break
+              //   case 'a100_premium':
+              //     column[i] = 'брендированный бензин марки А100'
+              //     // return 'брендированный бензин марки А100'
+              //     break
+              //   case 'propane':
+              //     column[i] = 'газ пропан'
+              //     // return 'газ пропан'
+              //     break
+              //   case 'metan':
+              //     column[i] = 'метан'
+              //     // return 'метан'
+              //     break
+              //   default:
+              //     // return
+              //     break
+              // }
+
+              return `${i+1}. ${column}`
+            })
           })
         })
       })
