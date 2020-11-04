@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{title}}</title>
+  <style>
+    .content-hide {
+      opacity: 0;
+      transition: .7s opacity ease-in-out;
+    }
+    .content-show {
+      opacity: 1;
+    }
+    .task-title {
+      display: table;
+      margin: 0 auto;
+      padding-top: 10px;
+      text-align: center;
+    }
+    .station-title {
+      padding-left: 1px;
+    }
+    .content:nth-last-child(n) {
+      border-bottom: 1px solid #000;
+      margin-bottom: 30px;
+    }
+    .content-row {
+      border: 1px solid #000;
+      border-bottom: none;
+      display: flex;
+    }
+    .content-cell-left {
+      border-right: 1px solid #000;
+      padding-left: 5px;
+      width: 30%;
+    }
+    .content-cell-right {
+      padding-left: 5px;
+    }
+  </style>
+  <script>
+    setTimeout(() => document.getElementsByClassName('wrapper')[0].className += ' content-show', 200)
+  </script>
+</head>
+
+<body>
+  <span class="task-title">
+    Тестовое задание на вакансию Backend developer (Node.js) в компанию FUELUP:
+    <br/ >
+    Получить данные об АЗС и стоимостях топлива. Вывести информацию в произвольном табличном виде.
+  </span>
+
+  <br/>
+  <hr/>
+
+  {{#if outputData}}
+    <div class="wrapper content-hide">
+      {{#each outputData}}
+
+        <span class="station-title">АЗС №{{this.Number}}</span>
+        <div class="content">
+          {{!-- Id --}}
+          <div class="content-row">
+            <div class="content-cell-left">Id</div>
+            <div class="content-cell-right">{{this.Id}}</div>
+          </div>
+          {{!-- Enable --}}
+          <div class="content-row">
+            <div class="content-cell-left">Enable</div>
+            <div class="content-cell-right">{{this.Enable}}</div>
+          </div>
+          {{!-- Name --}}
+          <div class="content-row">
+            <div class="content-cell-left">Name</div>
+            <div class="content-cell-right">{{this.Name}}</div>
+          </div>
+          {{!-- Address --}}
+          <div class="content-row">
+            <div class="content-cell-left">Address</div>
+            <div class="content-cell-right">{{this.Address}}</div>
+          </div>
+          {{!-- Location --}}
+          <div class="content-row">
+            <div class="content-cell-left">Location</div>
+            <div class="content-cell-right">{{this.Location}}</div>
+          </div>
+          {{!-- PostPay --}}
+          <div class="content-row">
+            <div class="content-cell-left">PostPay</div>
+            <div class="content-cell-right">{{this.PostPay}}</div>
+          </div>
+          {{!-- Columns --}}
+          <div class="content-row">
+            <div class="content-cell-left">Columns</div>
+            <div class="content-cell-right">{{{this.Columns}}}</div>
+          </div>
+        </div>
+
+      {{/each}}
+    </div>
+  {{/if}}
+</body>
+</html>
