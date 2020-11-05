@@ -7,6 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{title}}</title>
   <style>
+    .wrapper {
+      display: flex;
+      flex-direction: row nowrap;
+    }
     .content-hide {
       opacity: 0;
       transition: .7s opacity ease-in-out;
@@ -22,6 +26,13 @@
     }
     .station-title {
       padding-left: 1px;
+    }
+    .price-title {
+      display: block;
+      background-color: #F0E68C;
+      border: 1px solid #000;
+      border-bottom: none;
+      padding-left: 5px;
     }
     .content:nth-last-child(n) {
       border-bottom: 1px solid #000;
@@ -62,55 +73,69 @@
   <hr/>
 
   {{#if outputData}}
-    <div class="wrapper content-hide">
-      {{#each outputData}}
 
-        <span class="station-title">АЗС №{{this.Number}}</span>
-        <div class="content">
-          {{!-- Id --}}
-          <div class="content-row">
-            <div class="content-cell-left">Id</div>
-            <div class="content-cell-right">{{this.Id}}</div>
-          </div>
-          {{!-- Enable --}}
-          <div class="content-row">
-            <div class="content-cell-left">Работает</div>
-            <div class="content-cell-right">{{this.Enable}}</div>
-          </div>
-          {{!-- Name --}}
-          <div class="content-row">
-            <div class="content-cell-left">Название</div>
-            <div class="content-cell-right">{{this.Name}}</div>
-          </div>
-          {{!-- Address --}}
-          <div class="content-row">
-            <div class="content-cell-left">Адрес</div>
-            <div class="content-cell-right">{{this.Address}}</div>
-          </div>
-          {{!-- Location --}}
-          <div class="content-row">
-            <div class="content-cell-left">Местонахождение (координаты)</div>
-            <div class="content-cell-right">{{this.Location.Lat}}&nbsp;&nbsp;{{this.Location.Lon}}</div>
-          </div>
-          {{!-- PostPay --}}
-          <div class="content-row" style="color: #ff0000">
-            <div class="content-cell-left">Пост оплата</div>
-            <div class="content-cell-right">{{this.PostPay}}</div>
-          </div>
-          {{!-- Columns --}}
-          <div class="content-row">
-            <div class="content-cell-left">ТРК (номер, индентификатор горючего)</div>
-            <div class="content-cell-right-fuel">
-              {{#each this.Columns}}
-                <div class="column">
-                  {{this}}
-                </div>
-              {{/each}}
+    <div class="wrapper content-hide">
+      {{#each outputData.stations}}
+        <div class="station">
+          <span class="station-title">АЗС №{{this.Number}}</span>
+          <div class="content">
+            {{!-- Id --}}
+            <div class="content-row">
+              <div class="content-cell-left">Индентификатор</div>
+              <div class="content-cell-right">{{this.Id}}</div>
+            </div>
+            {{!-- Enable --}}
+            <div class="content-row">
+              <div class="content-cell-left">Работает</div>
+              <div class="content-cell-right">{{this.Enable}}</div>
+            </div>
+            {{!-- Name --}}
+            <div class="content-row">
+              <div class="content-cell-left">Название</div>
+              <div class="content-cell-right">{{this.Name}}</div>
+            </div>
+            {{!-- Address --}}
+            <div class="content-row">
+              <div class="content-cell-left">Адрес</div>
+              <div class="content-cell-right">{{this.Address}}</div>
+            </div>
+            {{!-- Location --}}
+            <div class="content-row">
+              <div class="content-cell-left">Местонахождение (координаты)</div>
+              <div class="content-cell-right">{{this.Location.Lat}}&nbsp;&nbsp;{{this.Location.Lon}}</div>
+            </div>
+            {{!-- PostPay --}}
+            <div class="content-row" style="color: #ff0000">
+              <div class="content-cell-left">Пост оплата</div>
+              <div class="content-cell-right">{{this.PostPay}}</div>
+            </div>
+            {{!-- Columns --}}
+            <div class="content-row">
+              <div class="content-cell-left">ТРК (номер, индентификатор горючего)</div>
+              <div class="content-cell-right-fuel">
+                {{#each this.Columns}}
+                  <div class="column">
+                    {{this}}
+                  </div>
+                {{/each}}
+              </div>
             </div>
           </div>
         </div>
-
       {{/each}}
+
+      {{#each outputData.prices}}
+        <div class="price">
+          <span class="price-title">Прайс-лист</span>
+          <div class="content-row content-row-fuel-prices">
+            <div class="content-cell-left">Горючее (индентификатор, стоимость)</div>
+            <div class="content-cell-right-fuel">
+              {{this.ProductId}} {{this.Price}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+
     </div>
   {{/if}}
 </body>

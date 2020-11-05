@@ -4,17 +4,19 @@ const fetch = require('node-fetch')
 
 const PORT = process.env.PORT || 8000
 
+const app = express()
+
+app.use(express.static('public'))
+
+app.engine('hbs', consolidate.handlebars)
+app.set('view engine', 'hbs')
+
 const apikey = 'd389ce64-1390-402f-8d7d-d5b5ce1248fa'
 
 const fuelUpSource = 'https://aggregator.api.test.fuelup.ru/'
 
 const fetchStationsInfo = `${fuelUpSource}/tanker/station?apikey=${apikey}`
 const fetchPricesInfo =   `${fuelUpSource}/tanker/price?apikey=${apikey}`
-
-const app = express()
-
-app.engine('hbs', consolidate.handlebars)
-app.set('view engine', 'hbs')
 
 app.get('/', async (_req, res) => {
   try {
@@ -36,7 +38,10 @@ app.get('/', async (_req, res) => {
             PostPay: station.PostPay ? 'Да' : 'Нет',
             Columns: Object.values(station.Columns).map((column, i) => {
 
-              // An attempt to translate fuel titles (needed strings of each array index to be parsed)
+              /** Попытка вывести названия горючего на русском языке:
+                * необходимо дополнительно распарсить строки с индентификаторами,
+                * которые являются эелементами массива
+                */
 
               // switch(column[i]) {
               //   case 'diesel':
